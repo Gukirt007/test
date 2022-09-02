@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    overflow-y: hidden !important;
+    padding-right: 0 !important;
+}
+.maxHeight {
+    height: 74vh;
+}

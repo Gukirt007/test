@@ -1,30 +1,50 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="min-h-full bg-white dark:bg-gray-800">
+    <TheHeader></TheHeader>
+    <main class="-mt-24 pb-8">
+      <div class="mx-auto container max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 rounded-lg">
+        <router-view></router-view>
+      </div>
+    </main>
+    <TheFooter></TheFooter>
+  </div>
+
+  <ErrorModel v-if="isAnyError" :shouldOpen="isAnyError"></ErrorModel>
+  <LoadingModel v-if="isLoading"></LoadingModel>
+
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script >
+import TheHeader from "./components/layouts/TheHeader.vue";
+import TheFooter from "./components/layouts/TheFooter.vue";
+import ErrorModel from './components/ErrorModel.vue'
+import LoadingModel from './components/LoadingModel.vue'
 
-nav {
-  padding: 30px;
+export default {
+  name: "App",
+  components: { TheHeader, TheFooter, ErrorModel, LoadingModel },
+  computed: {
+    isAnyError() {
+      return this.$store.getters.getError;
+    },
+    isLoading() {
+      return this.$store.getters.getIsLoading;
+    },
+    isDarkModeActive() {
+      return this.$store.getters.getDarkMode
+    }
+  },
+  beforeMount() {
+    this.$store.dispatch('fetchCards');
+  },
+  watch: {
+    isDarkModeActive(newVal) {
+      if (newVal) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    }
+  }
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
