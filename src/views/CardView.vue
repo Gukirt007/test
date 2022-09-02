@@ -12,7 +12,7 @@
       </div>
       <div class="mt-8">
         <h3 class="text-lg text-black dark:text-white font-medium">
-            <span :class="[card.highlight ? 'border-2 border-sky-800 dark:border-white' : '' , 'absolute inset-0']" aria-hidden="true" />
+            <span :class="[card.highlight ? 'border-4 rounded-md border-sky-800 dark:border-white' : '' , 'absolute inset-0']" aria-hidden="true" />
             {{ card.title }}
         </h3>
         <p class="mt-2 text-sm text-gray-500">Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit
@@ -54,8 +54,8 @@ export default {
       })
     } 
   },
-  beforeMount(){
-    this.$store.dispatch('fetchCards')
+  mounted(){  
+    // this.$store.dispatch('fetchCards')
   },
 }
 </script>
